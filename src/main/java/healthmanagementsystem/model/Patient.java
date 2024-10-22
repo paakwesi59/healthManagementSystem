@@ -14,6 +14,9 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<MedicalRecords> medicalRecords;
 
+    @OneToMany(mappedBy = "patient")  // Relationship with CheckIn
+    private List<CheckIn> checkIns;
+
     @Column(unique=true)
     private String registrationNumber;
     private LocalDate registrationDate;

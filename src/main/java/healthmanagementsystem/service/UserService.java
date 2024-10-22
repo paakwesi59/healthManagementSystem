@@ -19,6 +19,8 @@ public interface UserService {
     LoginResponse loginUser(LoginRequest loginRequest);
 
     boolean isTemporaryPassword(String email);
+
+    User getUserById(String userId);
 }
 
 

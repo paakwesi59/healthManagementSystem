@@ -1,6 +1,5 @@
 package healthmanagementsystem.service;
 
-
 import healthmanagementsystem.dto.MedicalRecordsRequest;
 import healthmanagementsystem.exception.ResourceNotFoundException;
 import healthmanagementsystem.model.MedicalRecords;

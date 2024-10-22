@@ -185,6 +185,12 @@ public class UserServiceImplementation implements UserService {
         User user = findUserByEmail(email);
         return user != null && user.isTemporaryPassword();
     }
+
+    @Override
+    public User getUserById(String userId) {  // Add this method
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserInvitationException(USER_NOT_FOUND_WITH_ID + userId));
+    }
 }
 
 

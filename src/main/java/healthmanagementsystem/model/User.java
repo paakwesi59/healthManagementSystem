@@ -2,10 +2,12 @@ package healthmanagementsystem.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +27,7 @@ public class User {
     private LocalDateTime resetTokenExpiry;
     private boolean isEnabled;
     private String specialization;
+
+    @OneToMany(mappedBy = "checkedInBy")  // Relationship with CheckIn
+    private List<CheckIn> checkIns;
 }

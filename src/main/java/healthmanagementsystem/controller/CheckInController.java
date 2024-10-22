@@ -1,53 +1,47 @@
 package healthmanagementsystem.controller;
 
+import healthmanagementsystem.dto.CheckInResponseDto;
 import healthmanagementsystem.model.CheckIn;
-import healthmanagementsystem.model.Patient;
-import healthmanagementsystem.model.User;
 import healthmanagementsystem.service.CheckInService;
-import healthmanagementsystem.service.PatientService;
-import healthmanagementsystem.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/checkin")
 public class CheckInController {
 
-    @Autowired
-    private CheckInService checkInService;
+    private final CheckInService checkInService;
 
-    @Autowired
-    private PatientService patientService;
-
-    @Autowired
-    private UserService userService;
-
-    // Endpoint to check in a patient
-    @PostMapping("/patient/{patientId}/staff/{staffId}")
-    public CheckIn checkInPatient(@PathVariable String patientId, @PathVariable String staffId) {
-        return checkInService.checkInPatient(
-                patientService.getPatientById(patientId),
-                userService.getUserById(staffId)
-        );
+    // Endpoint to check in a patient using registration number
+    @PostMapping("/patient/registration/{registrationNumber}/staff/{staffId}")
+    public ResponseEntity<CheckInResponseDto> checkInPatient(
+            @PathVariable String registrationNumber,
+            @PathVariable String staffId) {
+        return new ResponseEntity<>(checkInService.checkInPatient(registrationNumber, staffId), HttpStatus.CREATED);
     }
 
     // Endpoint to check out a patient
     @PostMapping("/checkout/{checkInId}/staff/{staffId}")
-    public CheckIn checkOutPatient(@PathVariable Long checkInId, @PathVariable String staffId) {
-        return checkInService.checkOutPatient(checkInId, userService.getUserById(staffId));
+    public ResponseEntity<CheckIn> checkOutPatient(
+            @PathVariable Long checkInId,
+            @PathVariable String staffId) {
+        return new ResponseEntity<>(checkInService.checkOutPatient(checkInId, staffId), HttpStatus.OK);
     }
 
     // Get all active check-ins
     @GetMapping("/active")
-    public List<CheckIn> getActiveCheckIns() {
-        return checkInService.getActiveCheckIns();
+    public ResponseEntity<List<CheckInResponseDto>> getActiveCheckIns() {
+        return new ResponseEntity<>(checkInService.getActiveCheckIns(), HttpStatus.OK);
     }
 
     // Get all check-ins by a staff member
     @GetMapping("/staff/{staffId}")
-    public List<CheckIn> getCheckInsByStaffMember(@PathVariable String staffId) {
-        return checkInService.getCheckInsByStaffMember(userService.getUserById(staffId));
+    public ResponseEntity<List<CheckIn>> getCheckInsByStaffMember(@PathVariable String staffId) {
+        return new ResponseEntity<>(checkInService.getCheckInsByStaffMember(staffId), HttpStatus.OK);
     }
 }

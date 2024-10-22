@@ -43,4 +43,5 @@ public class Patient {
     private String guardianPhoneNumber;
     private boolean deceased;
     private boolean admitted;
+    private int registrationYear;
 }

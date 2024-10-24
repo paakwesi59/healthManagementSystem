@@ -20,11 +20,5 @@ public class ResponseMessage {
         this.staffNumber = null;
     }
 
-    // New constructor for status, message, and patient details
-    public ResponseMessage(String status, String message, PatientDetails patientDetails) {
-        this.status = status;
-        this.message = message;
-        this.patientDetails = patientDetails;
-    }
 }
 

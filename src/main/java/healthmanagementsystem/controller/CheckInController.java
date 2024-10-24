@@ -3,6 +3,7 @@ package healthmanagementsystem.controller;
 import healthmanagementsystem.dto.CheckInResponseDto;
 import healthmanagementsystem.model.CheckIn;
 import healthmanagementsystem.service.CheckInService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +19,19 @@ public class CheckInController {
     private final CheckInService checkInService;
 
     // Endpoint to check in a patient using registration number
-    @PostMapping("/patient/registration/{registrationNumber}/staff/{staffId}")
+    @PostMapping("/patient/registration/{registrationNumber}")
     public ResponseEntity<CheckInResponseDto> checkInPatient(
             @PathVariable String registrationNumber,
-            @PathVariable String staffId) {
-        return new ResponseEntity<>(checkInService.checkInPatient(registrationNumber, staffId), HttpStatus.CREATED);
+            HttpServletRequest request) {
+        return new ResponseEntity<>(checkInService.checkInPatient(registrationNumber, request), HttpStatus.CREATED);
     }
 
     // Endpoint to check out a patient
-    @PostMapping("/checkout/{checkInId}/staff/{staffId}")
+    @PostMapping("/checkout/{checkInId}")
     public ResponseEntity<CheckIn> checkOutPatient(
             @PathVariable Long checkInId,
-            @PathVariable String staffId) {
-        return new ResponseEntity<>(checkInService.checkOutPatient(checkInId, staffId), HttpStatus.OK);
+            HttpServletRequest request) {
+        return new ResponseEntity<>(checkInService.checkOutPatient(checkInId, request), HttpStatus.OK);
     }
 
     // Get all active check-ins

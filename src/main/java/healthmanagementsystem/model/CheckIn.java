@@ -27,4 +27,5 @@ public class CheckIn {
     private CheckInStatus status;  // Status of the patient (WAITING, IN_PROGRESS, DISCHARGED)
 
     private Integer priorityLevel;  // Optional: For handling urgent or prioritized patients
+    private Integer queuePosition;
 }

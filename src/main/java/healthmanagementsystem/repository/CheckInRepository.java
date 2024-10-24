@@ -20,4 +20,10 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
     // Find all check-ins handled by a specific staff member
     List<CheckIn> findByCheckedInBy(User staffMember);
     List<CheckIn> findByStatus(CheckInStatus status);
+
+    boolean existsByPatientAndStatus(Patient patient, CheckInStatus checkInStatus);
+
+    List<CheckIn> findByPatientAndStatus(Patient patient, CheckInStatus checkInStatus);
+
+    Optional<Object> findByPatient(Patient patient);
 }
